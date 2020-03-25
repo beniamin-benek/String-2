@@ -15,6 +15,10 @@ public class Main {
         //System.out.println(sameStarChar("xy*zzz"));
         //System.out.println(plusOut("12xy34", "xy"));
         //System.out.println(zipZap("zi"));
+        //System.out.println(xyzThere("abcxyz"));
+        String string = "sm*eil*ly";
+        System.out.println(string);
+        System.out.println(starOut(string));
     }
 
     //Given two strings, word and a separator sep, return a big string made of count occurrences of the word, separated by the separator string.
@@ -208,6 +212,16 @@ public class Main {
         return true;
     }
 
+    //Return true if the given string contains an appearance of "xyz" where the xyz is not directly preceeded by a period (.). So "xxyz" counts but "x.xyz" does not.
+    private static boolean xyzThere(String str) {
+        if (str.length() >= 3 && str.substring(0, 3).equals("xyz")) return true;
+
+        for (int i = 1; i < str.length() - 2; i++) {
+            if (str.charAt(i - 1) != '.' && str.substring(i, i + 3).equals("xyz")) return true;
+        }
+        return false;
+    }
+
     //Given a string and a non-empty word string, return a version of the original String where all chars have been replaced by pluses ("+"),
     //except for appearances of the word string which are preserved unchanged.
     private static String plusOut(String str, String word) {
@@ -244,7 +258,25 @@ public class Main {
         return output.toString();
     }
 
+    //Return a version of the given string, where for every star (*) in the string the star and the chars immediately to its left and right are gone.
+    private static String starOut(String str) {
+        if (str == null || str.length() == 0) return "";
+        if (str.length() == 1 && str.charAt(0) == '*') return "";
+        if (str.length() == 1 && str.charAt(0) != '*') return str;
 
+        StringBuilder stringBuilder = new StringBuilder();
 
+        if (str.charAt(0) != '*' && str.charAt(1) != '*')
+            stringBuilder.append(str.charAt(0));
 
+        for (int i = 1; i < str.length() - 1; i++) {
+            if (str.charAt(i - 1) != '*' && str.charAt(i) != '*' && str.charAt(i + 1) != '*')
+                stringBuilder.append(str.charAt(i));
+        }
+
+        if (str.charAt(str.length() - 1) != '*' && str.charAt(str.length() - 2) != '*')
+            stringBuilder.append(str.charAt(str.length() - 1));
+
+        return stringBuilder.toString();
+    }
 }
