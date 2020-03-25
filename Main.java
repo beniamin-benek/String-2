@@ -16,9 +16,9 @@ public class Main {
         //System.out.println(plusOut("12xy34", "xy"));
         //System.out.println(zipZap("zi"));
         //System.out.println(xyzThere("abcxyz"));
-        String string = "sm*eil*ly";
-        System.out.println(string);
-        System.out.println(starOut(string));
+        //String string = "abc1abc1abc";
+        //System.out.println(string);
+        //System.out.println(wordEnds("XY", "XY"));
     }
 
     //Given two strings, word and a separator sep, return a big string made of count occurrences of the word, separated by the separator string.
@@ -42,11 +42,10 @@ public class Main {
             return false;
 
         int middleIndex;
-        if(str.length()%2==0) {
+        if (str.length() % 2 == 0) {
             middleIndex = (str.length() / 2) - 1;
             return (str.charAt(middleIndex) == 'x' && str.charAt(middleIndex + 1) == 'y' && str.charAt(middleIndex + 2) == 'z') || (str.charAt(middleIndex - 1) == 'x' && str.charAt(middleIndex) == 'y' && str.charAt(middleIndex + 1) == 'z');
-        }
-        else {
+        } else {
             middleIndex = str.length() / 2;
             return (str.charAt(middleIndex - 1) == 'x' && str.charAt(middleIndex) == 'y' && str.charAt(middleIndex + 1) == 'z');
         }
@@ -88,7 +87,7 @@ public class Main {
     //Return true if the given string contains a "bob" string, but where the middle 'o' char can be any char.
     private static boolean bobThere(String str) {
         for (int i = 0; i < str.length() - 2; i++) {
-            if(str.charAt(i) == 'b' && str.charAt(i + 2) == 'b')
+            if (str.charAt(i) == 'b' && str.charAt(i + 2) == 'b')
                 return true;
         }
         return false;
@@ -150,8 +149,7 @@ public class Main {
                 output = output.concat(a.charAt(i) + "").concat(b.charAt(i) + "");
 
             return output.concat(a.substring(b.length()));
-        }
-        else {
+        } else {
             for (int i = 0; i < a.length(); i++)
                 output = output.concat(a.charAt(i) + "").concat(b.charAt(i) + "");
 
@@ -166,7 +164,7 @@ public class Main {
         StringBuilder stringBuilder = new StringBuilder();
         String endChars = str.substring(str.length() - n);
 
-        for (int i = 0; i < n ; i++)
+        for (int i = 0; i < n; i++)
             stringBuilder.append(endChars);
 
         return stringBuilder.toString();
@@ -205,8 +203,8 @@ public class Main {
 
     //Returns true if for every '*' (star) in the string, if there are chars both immediately before and after the star, they are the same.
     private static boolean sameStarChar(String str) {
-        for(int i = 1; i < str.length() - 1; i++) {
-            if(str.charAt(i) == '*' && str.charAt(i - 1) != str.charAt(i + 1))
+        for (int i = 1; i < str.length() - 1; i++) {
+            if (str.charAt(i) == '*' && str.charAt(i - 1) != str.charAt(i + 1))
                 return false;
         }
         return true;
@@ -231,8 +229,7 @@ public class Main {
             if (i <= str.length() - word.length() && str.substring(i, i + word.length()).equals(word)) {
                 output.append(word);
                 i = i + word.length();
-            }
-            else {
+            } else {
                 output.append("+");
                 i++;
             }
@@ -249,8 +246,7 @@ public class Main {
             if (str.length() >= 3 && str.charAt(i) == 'z' && str.charAt(i + 2) == 'p') {
                 output.append(str.charAt(i)).append(str.charAt(i + 2));
                 i = i + 3;
-            }
-            else {
+            } else {
                 output.append(str.charAt(i));
                 i++;
             }
@@ -279,4 +275,25 @@ public class Main {
 
         return stringBuilder.toString();
     }
+
+    //Given a string and a non-empty word string, return a string made of each char just before and just after every appearance of the word in the string.
+    //Ignore cases where there is no char before or after the word, and a char may be included twice if it is between two words.
+    private static String wordEnds(String str, String word) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (str == null || str.length() < word.length()) return "";
+
+        if (str.substring(0, word.length()).equals(word))
+            stringBuilder.append(str.charAt(word.length()));
+
+        for (int i = word.length() - 1; i < str.length() - word.length(); i++) {
+            if (str.substring(i, i + word.length()).equals(word))
+                stringBuilder.append(str.charAt(i - 1)).append(str.charAt(i + word.length()));
+        }
+
+        if (str.substring(str.length() - word.length()).equals(word))
+            stringBuilder.append(str.charAt(str.length() - word.length() - 1));
+
+        return stringBuilder.toString();
+    }
+
 }
